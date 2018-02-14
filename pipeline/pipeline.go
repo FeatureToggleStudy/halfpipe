@@ -60,7 +60,7 @@ func (p Pipeline) makeRunJob(task model.Run, repo model.Repo) atc.JobConfig {
 					Params:        task.Vars,
 					ImageResource: p.makeImageResource(task.Image),
 					Run: atc.TaskRunConfig{
-						Path: "/bin/sh",
+						Path: "sh",
 						Dir:  repo.GetName(),
 						Args: []string{"-exc", fmt.Sprintf("%s", task.Script)},
 					},
