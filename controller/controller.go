@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"github.com/concourse/atc"
 	"github.com/spf13/afero"
 	"github.com/springernature/halfpipe/errors"
 	"github.com/springernature/halfpipe/linters"
@@ -48,14 +47,14 @@ func (c Controller) readManifest() (model.Manifest, []error) {
 	return man, nil
 }
 
-func (c Controller) Process() (atc.Config, []error) {
+func (c Controller) Process() (pipeline.Config, []error) {
 	if err := linters.CheckFile(c.Fs, halfpipeFile, false); err != nil {
-		return atc.Config{}, []error{err}
+		return pipeline.Config{}, []error{err}
 	}
 
 	manifest, errs := c.readManifest()
 	if errs != nil {
-		return atc.Config{}, errs
+		return pipeline.Config{}, errs
 	}
 
 	for _, linter := range c.Linters {
@@ -63,7 +62,7 @@ func (c Controller) Process() (atc.Config, []error) {
 	}
 
 	if errs != nil {
-		return atc.Config{}, errs
+		return pipeline.Config{}, errs
 	}
 
 	return c.Renderer.Render(manifest), nil

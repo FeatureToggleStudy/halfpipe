@@ -64,7 +64,7 @@ func main() {
 		syscall.Exit(1)
 	}
 
-	pipelineYaml, err := pipeline.ToString(pipelineConfig)
+	pipelineYaml, err := pipelineConfig.ToString()
 	printAndExit(err)
 
 	fmt.Println(pipelineYaml)

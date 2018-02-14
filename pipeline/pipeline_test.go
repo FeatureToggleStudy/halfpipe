@@ -18,7 +18,7 @@ func TestRendersHttpGitResource(t *testing.T) {
 	manifest := model.Manifest{}
 	manifest.Repo.Uri = gitUri
 
-	expected := atc.Config{
+	expected := Config{
 		Resources: atc.ResourceConfigs{
 			atc.ResourceConfig{
 				Name: name,
@@ -41,7 +41,7 @@ func TestRendersSshGitResource(t *testing.T) {
 	manifest.Repo.Uri = gitUri
 	manifest.Repo.PrivateKey = privateKey
 
-	expected := atc.Config{
+	expected := Config{
 		Resources: atc.ResourceConfigs{
 			atc.ResourceConfig{
 				Name: name,
@@ -89,7 +89,7 @@ func TestRenderRunTask(t *testing.T) {
 					},
 				},
 				Run: atc.TaskRunConfig{
-					Path: "/bin/sh",
+					Path: "sh",
 					Dir:  manifest.Repo.GetName(),
 					Args: []string{"-exc", "./yolo.sh"},
 				},
@@ -106,7 +106,7 @@ func TestToString(t *testing.T) {
 	man := model.Manifest{}
 	man.Repo.Uri = "repo.git"
 
-	actual, err := ToString(pipe.Render(man))
+	actual, err := pipe.Render(man).ToString()
 	expected := "uri: repo.git"
 
 	assert.Nil(t, err)

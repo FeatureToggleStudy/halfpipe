@@ -9,8 +9,10 @@ import (
 	"github.com/springernature/halfpipe/model"
 )
 
+type Config atc.Config
+
 type Renderer interface {
-	Render(manifest model.Manifest) atc.Config
+	Render(manifest model.Manifest) Config
 }
 
 type Pipeline struct{}
@@ -70,8 +72,8 @@ func (p Pipeline) makeRunJob(task model.Run, repo model.Repo) atc.JobConfig {
 				}}}}
 }
 
-func (p Pipeline) Render(manifest model.Manifest) atc.Config {
-	config := atc.Config{
+func (p Pipeline) Render(manifest model.Manifest) Config {
+	config := Config{
 		Resources: atc.ResourceConfigs{
 			p.gitResource(manifest.Repo),
 		},
@@ -86,7 +88,7 @@ func (p Pipeline) Render(manifest model.Manifest) atc.Config {
 	return config
 }
 
-func ToString(pipeline atc.Config) (string, error) {
-	renderedPipeline, err := yaml.Marshal(pipeline)
+func (c Config) ToString() (string, error) {
+	renderedPipeline, err := yaml.Marshal(c)
 	return string(renderedPipeline), err
 }
