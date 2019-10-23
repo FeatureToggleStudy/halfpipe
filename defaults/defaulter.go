@@ -29,9 +29,10 @@ type Defaults struct {
 	DockerPassword string
 	DockerfilePath string
 
-	Project project.Data
-
+	DockerComposeFile    string
 	DockerComposeService string
+
+	Project project.Data
 
 	ArtifactoryUsername string
 	ArtifactoryPassword string
